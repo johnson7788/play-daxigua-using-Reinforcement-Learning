@@ -32,6 +32,9 @@ def preprocess(observation):
 
 class DeepNetWork(nn.Module):
     def __init__(self,):
+        """
+        三个卷积+全连接
+        """
         super(DeepNetWork,self).__init__()
         self.conv1 = nn.Sequential(
             nn.Conv2d(in_channels=4, out_channels=32, kernel_size=8, stride=4, padding=2),
@@ -53,33 +56,53 @@ class DeepNetWork(nn.Module):
         self.out = nn.Linear(256,2)
 
     def forward(self, x):
-        x = self.conv1(x); x = self.conv2(x);
-        x = self.conv3(x); x = x.view(x.size(0),-1)
-        x = self.fc1(x); return self.out(x)
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        x = x.view(x.size(0),-1)
+        x = self.fc1(x)
+        logits = self.out(x)
+        return logits
 class BrainDQNMain(object):
-    def save(self):
-        print("save model param")
-        torch.save(self.Q_net.state_dict(), 'params3.pth')
-
-    def load(self):
-        if os.path.exists("params3.pth"):
-            print("load model param")
-            self.Q_net.load_state_dict(torch.load('params3.pth'))
-            self.Q_netT.load_state_dict(torch.load('params3.pth'))
-
     def __init__(self, actions):
+        """
+        :param actions: 动作数，16
+        :type actions: int
+        """
+        # 初始化一个记忆重放
         self.replayMemory = deque()  # init some parameters
         self.timeStep = 0
         self.epsilon = INITIAL_EPSILON
         self.actions = actions
+        # Q网络
         self.Q_net = DeepNetWork()
+        # Q的target网络
         self.Q_netT = DeepNetWork()
         self.load()
         self.loss_func = nn.MSELoss()
         LR = 1e-6
         self.optimizer = torch.optim.Adam(self.Q_net.parameters(), lr=LR)
+    def save(self):
+        print("保存模型")
+        torch.save(self.Q_net.state_dict(), 'params3.pth')
+
+    def load(self):
+        """
+        如果已存在，就加载已存在的模型，继续训练
+        :return:
+        :rtype:
+        """
+        if os.path.exists("params3.pth"):
+            print("发现已经存在模型参数，加载模型")
+            self.Q_net.load_state_dict(torch.load('params3.pth'))
+            self.Q_netT.load_state_dict(torch.load('params3.pth'))
 
     def train(self):  # Step 1: obtain random minibatch from replay memory
+        """
+
+        :return:
+        :rtype:
+        """
         minibatch = random.sample(self.replayMemory, BATCH_SIZE)
         state_batch = [data[0] for data in minibatch]
         action_batch = [data[1] for data in minibatch]
@@ -128,6 +151,19 @@ class BrainDQNMain(object):
 
     # print(nextObservation.shape)
     def setPerception(self, nextObservation, action, reward, terminal):
+        """
+
+        :param nextObservation:
+        :type nextObservation:
+        :param action:
+        :type action:
+        :param reward:
+        :type reward:
+        :param terminal:
+        :type terminal:
+        :return:
+        :rtype:
+        """
         # newState = np.append(nextObservation,self.currentState[:,:,1:],axis = 2)
         newState = np.append(
             self.currentState[1:, :, :], nextObservation, axis=0)
@@ -152,6 +188,11 @@ class BrainDQNMain(object):
         self.timeStep += 1
 
     def getAction(self):
+        """
+
+        :return:
+        :rtype:
+        """
         currentState = torch.Tensor([self.currentState])
         QValue = self.Q_net(currentState)[0]
         action = np.zeros(self.actions)
@@ -174,6 +215,13 @@ class BrainDQNMain(object):
         return np.argmax(action)
 
     def setInitState(self, observation):
+        """
+
+        :param observation:
+        :type observation:
+        :return:
+        :rtype:
+        """
         self.currentState = np.stack(
             (observation, observation, observation, observation), axis=0)
         print(self.currentState.shape)
@@ -184,6 +232,7 @@ if __name__ == '__main__':
     game = AI_Board()
     # 可操作的动作数量
     actions = game.action_num
+    # 初始化DQN
     brain = BrainDQNMain(actions)
     # Step 3.1: obtain init state
     action0 = 0
