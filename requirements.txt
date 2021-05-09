@@ -1,2 +1,5 @@
-paddlepaddle
+pygame
 pymunk
+parl
+paddlepaddle
+keras
