@@ -127,6 +127,11 @@ class GameBoard(object):
         space.add(segment_shape)
 
     def show_score(self):
+        """
+        更新分数
+        :return:
+        :rtype:
+        """
         score_font = pg.font.Font(None, 36)
         score_text = score_font.render(
             'score: {}'.format(str(self.score)), True, (255, 165, 0))

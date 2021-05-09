@@ -6,9 +6,9 @@ def create_fruit(type, x, y):
     创建一个水果，类型是1到11， 1：葡萄，2：樱桃，3：橘子，4：柠檬，5：猕猴桃，6：西红柿，7：桃子，8：菠萝，9：柚子，10：西瓜，11：大西瓜
     :param type: 1-11
     :type type: int
-    :param x: react的大小x
+    :param x: 水果要在屏幕中出现的位置x
     :type x:
-    :param y: react的大小y
+    :param y: 水果要在屏幕中出现的位置y
     :type y:
     :return: 创建的的水果的类
     :rtype:
@@ -49,7 +49,7 @@ class Fruit():
         :type y:
         """
         self.load_images()
-        # 初始化一个pygame正方形
+        # 初始化一个pygame正方形， eg: <rect(0, 0, 40, 40)>
         self.rect = self.image.get_rect()
         # react的x和y，确定它的大小
         self.rect.x = x
@@ -73,13 +73,15 @@ class PT(Fruit):
     def __init__(self, x, y):
         """
         葡萄
-        :param x:
+        :param x: 水果要在屏幕中出现的位置x
         :type x:
-        :param y:
+        :param y:水果要在屏幕中出现的位置y
         :type y:
         """
+        # self.r 是半径
         self.r = 2 * 10
         self.type = 1
+        # 加载图片后，改成现在的大小
         self.size = (self.r*2, self.r*2)
         Fruit.__init__(self, x - self.r, y - self.r)
 

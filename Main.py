@@ -22,17 +22,21 @@ class Board(GameBoard):
             self.space.step(1 / self.FPS)
             self.space.debug_draw(self.draw_options)
             if self.count % (self.FPS * self.create_time) == 0:
+                # 随机创建一个水果，1：葡萄，2：樱桃，3：橘子，4：柠檬，都是比较小的水果，
                 self.i = randrange(1, 5)
+                # 水果的位置在中间创建，等待用户鼠标点击
                 self.current_fruit = create_fruit(
                     self.i, int(self.WIDTH/2), self.init_y - 10)
                 self.count = 1
                 self.waiting = True
-            # pygame返回的事件处理
+            # pygame返回的事件处理，如果用户点击了鼠标，那么在用户点击的位置创建上面的水果种类，就相当于移动了水果的位置
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     exit()
                 elif event.type == pg.MOUSEBUTTONUP and self.i and self.waiting:
+                    #获取用户鼠标点击的位置
                     x, _ = pg.mouse.get_pos()
+                    #创建一个水果，self.i代表水果的类别，x是鼠标点击的位置，y的位置是我们初始化的位置
                     fruit = create_fruit(self.i, x, self.init_y)
                     self.fruits.append(fruit)
                     ball = self.create_ball(
@@ -55,6 +59,7 @@ class Board(GameBoard):
                 self.current_fruit.draw(self.surface)
             pg.draw.aaline(self.surface, (0, 200, 0),
                            (0, self.init_y), (self.WIDTH, self.init_y), 5)
+            #更新分数
             self.show_score()
             if self.check_fail():
                 self.score = 0
