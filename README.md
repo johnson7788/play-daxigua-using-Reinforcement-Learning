@@ -16,7 +16,8 @@
 # 依赖包
 pymunk: 2D物理引擎
 torch: # 训练train_torch.py时使用
-parl: 百度强化学习包, paddle:百度深度学习包，使用train_paddle.py训练时安装  pip install parl paddlepaddle -i https://mirror.baidu.com/pypi/simple
+### parl的版本未知
+parl: 百度强化学习包, paddle:百度深度学习包，使用train_paddle.py训练时安装  pip install parl==1.1 paddlepaddle -i https://mirror.baidu.com/pypi/simple
 keras: tensorlow系列
 
 # 文件信息

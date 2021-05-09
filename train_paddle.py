@@ -49,7 +49,7 @@ class Agent(parl.Agent):
         with fluid.program_guard(self.pred_program):  # 搭建计算图用于 预测动作，定义输入输出变量
             obs = layers.data(
                 name='obs', shape=self.obs_dim, dtype='float32')
-            self.value = self.alg.predict(obs)
+            self.value = self.alg.define_predict(obs)
 
         with fluid.program_guard(self.learn_program):  # 搭建计算图用于 更新Q网络，定义输入输出变量
             obs = layers.data(
@@ -59,7 +59,7 @@ class Agent(parl.Agent):
             next_obs = layers.data(
                 name='next_obs', shape=self.obs_dim, dtype='float32')
             terminal = layers.data(name='terminal', shape=[], dtype='bool')
-            self.cost = self.alg.learn(obs, action, reward, next_obs, terminal)
+            self.cost = self.alg.define_learn(obs, action, reward, next_obs, terminal)
 
     def sample(self, obs):
         sample = np.random.rand()  # 产生0~1之间的小数
@@ -219,7 +219,8 @@ if __name__ == '__main__':
 
     # 根据parl框架构建agent
     model = Model(act_dim=action_dim)
-    algorithm = DQN(model, act_dim=action_dim, gamma=GAMMA, lr=LEARNING_RATE)
+    hyperparas = {"action_dim": action_dim, "gamma":GAMMA, "lr": LEARNING_RATE}
+    algorithm = DQN(model, hyperparas)
     agent = Agent(
         algorithm,
         obs_dim=obs_shape,
