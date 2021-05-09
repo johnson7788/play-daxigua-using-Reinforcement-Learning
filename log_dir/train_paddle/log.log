@@ -1,2 +1,0 @@
-[32m[05-09 20:55:28 MainThread @logger.py:144][0m Argv: /Users/admin/git/play-daxigua-using-Reinforcement-Learning/train_paddle.py
-[33m[05-09 20:55:31 MainThread @machine_info.py:88][0m [5m[33mWRN[0m Cannot find available GPU devices, using CPU now.
