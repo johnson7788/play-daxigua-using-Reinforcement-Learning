@@ -21,7 +21,7 @@ class AI_Board(GameBoard):
         # 根据不同的动作信号，选择不同的放置位置
         seg = (self.WIDTH - 40) // self.action_num
         x = action * seg + 20
-        print(f"根据选择的动作:{action},我要把这次水果放置到的位置是，只是横坐标:{x},")
+        print(f"根据选择的动作:{action},我要把这次水果放置到的位置是，横坐标是:{x},")
         # 返回要放置的位置
         return x
 

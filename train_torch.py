@@ -10,7 +10,6 @@ from torch import nn
 import os
 sys.path.append("game/")
 
-GAME = 'bird'  # the name of the game being played for log files
 GAMMA = 0.99  # decay rate of past observations
 # 每1000个timestep，训练一次DQN网络，
 OBSERVE = 1000.
@@ -19,7 +18,8 @@ FINAL_EPSILON = 0.0001  # final value of epsilon
 INITIAL_EPSILON = 0.0001  # starting value of epsilon
 # 以前要记住的transitions的数量, 保留的最大的buffer记忆的数量
 REPLAY_MEMORY = 50000
-BATCH_SIZE = 32  # size of minibatch
+#训练的batch_size
+BATCH_SIZE = 32
 FRAME_PER_ACTION = 1
 UPDATE_TIME = 100
 # 游戏观察的画面进行resize，特征的大小
@@ -66,7 +66,8 @@ class DeepNetWork(nn.Module):
             nn.Linear(1600,256),
             nn.ReLU()
         )
-        self.out = nn.Linear(256,2)
+        #输出的动作数应该是离散的动作数
+        self.out = nn.Linear(256,14)
 
     def forward(self, x):
         x = self.conv1(x)
