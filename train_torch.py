@@ -199,9 +199,7 @@ class BrainDQNMain(object):
             state = "explore"
         else:
             state = "train"
-        print("TIMESTEP", self.timeStep, "/ STATE",
-              state, "/ EPSILON", self.epsilon)
-
+        print(f"已经进行了{self.timeStep}步，现在处理 {state}状态, 当前的EPSILON值是 {self.epsilon}")
         #更新上一个状态self.currentState到当前的状态newState
         self.currentState = newState
         #时间步+1
