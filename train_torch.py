@@ -3,23 +3,22 @@ import torch
 from collections import deque
 import numpy as np
 import random
-import pdb
 import cv2
 import sys
 from torch import nn
 import os
-sys.path.append("game/")
 
 GAMMA = 0.99  # decay rate of past observations
 # 每1000个timestep，训练一次DQN网络，
-OBSERVE = 1000.
-EXPLORE = 2000000.  # frames over which to anneal epsilon
-FINAL_EPSILON = 0.0001  # final value of epsilon
+OBSERVE = 40.
+EXPLORE = 20000.  # frames over which to anneal epsilon
+# 如果FINAL_EPSILON 和INITIAL_EPSILON 的值相等，那么随机探索的概率会保持不变
 INITIAL_EPSILON = 0.0001  # starting value of epsilon
+FINAL_EPSILON = 0.0001  # final value of epsilon
 # 以前要记住的transitions的数量, 保留的最大的buffer记忆的数量
-REPLAY_MEMORY = 50000
+REPLAY_MEMORY = 2000
 #训练的batch_size
-BATCH_SIZE = 32
+BATCH_SIZE = 8
 FRAME_PER_ACTION = 1
 UPDATE_TIME = 100
 # 游戏观察的画面进行resize，特征的大小
@@ -267,6 +266,7 @@ if __name__ == '__main__':
     brain.setInitState(observation0)
     # 开始游戏和训练
     while True:
+        print()
         # 通过强化学习获取动作,获取输出的动作，action: int
         action = brain.getAction()
         #根据下一个动作，返回下一个状态和奖励
