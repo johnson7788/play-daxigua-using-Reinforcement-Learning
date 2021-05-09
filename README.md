@@ -16,6 +16,33 @@
 # 依赖包
 pymunk: 2D物理引擎
 
+# 文件信息
+```buildoutcfg
+├── Fruit.py  水果类相关
+├── Game.py  游戏的逻辑和画布相关
+├── LICENSE
+├── Main.py   人工玩游戏的主程序
+├── README.md
+├── State.py
+├── requirements.txt  依赖包
+├── res   各种水果的png图片， 1：葡萄，2：樱桃，3：橘子，4：柠檬，5：猕猴桃，6：西红柿，7：桃子，8：菠萝，9：柚子，10：西瓜，11：大西瓜
+│   ├── 01.png
+│   ├── 02.png
+│   ├── 03.png
+│   ├── 04.png
+│   ├── 05.png
+│   ├── 06.png
+│   ├── 07.png
+│   ├── 08.png
+│   ├── 09.png
+│   ├── 10.png
+│   └── 11.png
+├── resnet.py   resnet的模型
+├── train_keras.py  使用keras
+├── train_paddle.py 使用paddle
+└── train_torch.py  使用torch包的强化学习
+```
+
 ## 1. 打开游戏：
 
 这里使用pygame重写了大西瓜游戏，并封装为适合RL环境的代码。
