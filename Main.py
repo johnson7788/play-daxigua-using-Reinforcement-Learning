@@ -9,6 +9,7 @@ class Board(GameBoard):
         self.create_time = 2
         self.gravity = (0, 800)
         GameBoard.__init__(self, self.create_time, self.gravity)
+        # 初始化游戏的框架边界
         self.init_segment()
         self.setup_collision_handler()
         
@@ -26,7 +27,7 @@ class Board(GameBoard):
                     self.i, int(self.WIDTH/2), self.init_y - 10)
                 self.count = 1
                 self.waiting = True
-
+            # pygame返回的事件处理
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     exit()
@@ -72,7 +73,7 @@ class Board(GameBoard):
                 self.balls = self.balls[:-seg]
 
     def run(self):
-
+        # 游戏主体程序
         while True:
             self.next_frame()
 

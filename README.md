@@ -13,6 +13,9 @@
 
 > Github：[https://github.com/Sharpiless](https://github.com/Sharpiless)
 
+# 依赖包
+pymunk: 2D物理引擎
+
 ## 1. 打开游戏：
 
 这里使用pygame重写了大西瓜游戏，并封装为适合RL环境的代码。

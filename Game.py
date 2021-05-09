@@ -19,7 +19,7 @@ class GameBoard(object):
         self.surface = pg.display.set_mode(self.RES)
         self.clock = pg.time.Clock()
         self.draw_options = pymunk.pygame_util.DrawOptions(self.surface)
-
+        # 游戏空间
         self.space = pymunk.Space()
         self.space.gravity = gravity
         self.create_time = create_time
@@ -43,9 +43,11 @@ class GameBoard(object):
         self.alive = True
 
     def init_segment(self):
+        # 游戏的边框的四个角
         B1, B2, B3, B4 = (0, 0), (0, self.HEIGHT), (self.WIDTH,
                                                     self.HEIGHT), (self.WIDTH, 0)
         borders = (B1, B2), (B2, B3), (B3, B4)
+        # 创建主体画布
         for border in borders:
             self.create_segment(*border, 20, self.space, 'darkslategray')
 
@@ -103,6 +105,21 @@ class GameBoard(object):
         return ball_shape
 
     def create_segment(self, from_, to_, thickness, space, color):
+        """
+        创建游戏的边框
+        :param from_: (0, 800)
+        :type from_:
+        :param to_: (400, 800)
+        :type to_:
+        :param thickness: 20
+        :type thickness:
+        :param space: 游戏的空间
+        :type space:
+        :param color: 颜色 'darkslategray'
+        :type color:
+        :return:
+        :rtype:
+        """
         segment_shape = pymunk.Segment(
             space.static_body, from_, to_, thickness)
         segment_shape.color = pg.color.THECOLORS[color]
