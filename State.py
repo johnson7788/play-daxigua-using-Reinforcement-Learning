@@ -24,6 +24,13 @@ class AI_Board(GameBoard):
         return x
 
     def next_frame(self, action=None):
+        """
+        输入一个动作，对游戏进行交互
+        :param action:  eg: 0
+        :type action: int
+        :return:
+        :rtype:
+        """
         try:
             reward = 0
             if not self.waiting:
@@ -95,6 +102,13 @@ class AI_Board(GameBoard):
         return image, self.score, reward, self.alive
 
     def next(self, action=None):
+        """
+        根据输入的动作，返回状态奖励，存活状态等
+        :param action: eg: 0
+        :type action: int
+        :return:
+        :rtype:
+        """
         _, _, reward, _ = self.next_frame(action=action)
         for _ in range(self.FPS * 3):
             _, _, nreward, _ = self.next_frame()
