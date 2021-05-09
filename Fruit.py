@@ -60,12 +60,30 @@ class Fruit():
         pass
 
     def update_position(self, x, y, angle_degree=0):
+        """
+        更新水果的位置，当下落的时候
+        :param x:
+        :type x:
+        :param y:
+        :type y:
+        :param angle_degree:
+        :type angle_degree:
+        :return:
+        :rtype:
+        """
         self.rect.x = x - self.r
         self.rect.y = y - self.r
         self.angle_degree = angle_degree
         # self.image = pg.transform.rotate(self.image, self.angle_degree)
 
     def draw(self, surface):
+        """
+        把水果画到游戏画面上
+        :param surface:
+        :type surface:
+        :return:
+        :rtype:
+        """
         surface.blit(self.image, self.rect)
 
 

@@ -95,6 +95,23 @@ class GameBoard(object):
                 i, i).post_solve = post_solve_bird_line
 
     def create_ball(self, space, x, y, m=1, r=7, i=1):
+        """
+        水果下落处理
+        :param space:
+        :type space:
+        :param x:
+        :type x:
+        :param y:
+        :type y:
+        :param m:
+        :type m:
+        :param r:
+        :type r:
+        :param i:
+        :type i:
+        :return:
+        :rtype:
+        """
         ball_moment = pymunk.moment_for_circle(m, 0, r)
         ball_body = pymunk.Body(m, ball_moment)
         ball_body.position = x, y
