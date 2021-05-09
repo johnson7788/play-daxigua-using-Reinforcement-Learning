@@ -23,7 +23,7 @@ pymunk: 2D物理引擎
 ├── LICENSE
 ├── Main.py   人工玩游戏的主程序
 ├── README.md
-├── State.py
+├── State.py  使用强化学习控制的游戏的agent
 ├── requirements.txt  依赖包
 ├── res   各种水果的png图片， 1：葡萄，2：樱桃，3：橘子，4：柠檬，5：猕猴桃，6：西红柿，7：桃子，8：菠萝，9：柚子，10：西瓜，11：大西瓜
 │   ├── 01.png

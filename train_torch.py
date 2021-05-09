@@ -182,6 +182,7 @@ class BrainDQNMain(object):
 if __name__ == '__main__':
     from State import AI_Board
     game = AI_Board()
+    # 可操作的动作数量
     actions = game.action_num
     brain = BrainDQNMain(actions)
     # Step 3.1: obtain init state

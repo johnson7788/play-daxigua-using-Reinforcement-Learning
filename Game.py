@@ -53,6 +53,7 @@ class GameBoard(object):
 
     def setup_collision_handler(self):
         def post_solve_bird_line(arbiter, space, data):
+            #水果的合成处理
             if not self.lock:
                 self.lock = True
                 b1, b2 = None, None
@@ -88,7 +89,7 @@ class GameBoard(object):
                     self.last_score = self.score
                     self.score += 100
                 self.lock = False
-
+        # 初始化水果的处理的类
         for i in range(1, 11):
             self.space.add_collision_handler(
                 i, i).post_solve = post_solve_bird_line
