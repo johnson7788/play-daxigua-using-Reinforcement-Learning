@@ -28,7 +28,7 @@ class AI_Board(GameBoard):
         输入一个动作，对游戏进行交互
         :param action:  eg: 0
         :type action: int
-        :return:
+        :return: image: 形状(400, 800, 3), self.score:int, reward:int, self.alive:bool
         :rtype:
         """
         try:
@@ -109,14 +109,18 @@ class AI_Board(GameBoard):
         :return:
         :rtype:
         """
+        # 选择一个动作
         _, _, reward, _ = self.next_frame(action=action)
+        # 需要经历3*self.FPS，等待水果落下，合并后，才能给出最终奖励
         for _ in range(self.FPS * 3):
             _, _, nreward, _ = self.next_frame()
             reward += nreward
         image, _, nreward, _ = self.next_frame()
         reward += nreward
         if reward == 0:
+            #如果没有得分，那么我们让奖励为负值，这样有益于训练
             reward = -self.i
+        # 获取最终的奖励
         return image, self.score, reward, self.alive
 
     def run(self):
