@@ -10,8 +10,8 @@ import os
 from State import AI_Board
 
 GAMMA = 0.99  # decay rate of past observations
-# 每1000个timestep，训练一次DQN网络，
-OBSERVE = 40.
+# 每40个timestep，训练一次DQN网络，
+OBSERVE = 20.
 EXPLORE = 20000.  # frames over which to anneal epsilon
 # 如果FINAL_EPSILON 和INITIAL_EPSILON 的值相等，那么随机探索的概率会保持不变
 INITIAL_EPSILON = 0.0001  # starting value of epsilon
@@ -124,14 +124,15 @@ class BrainDQNMain(object):
         state_batch = [data[0] for data in minibatch]
         action_batch = [data[1] for data in minibatch]
         reward_batch = [data[2] for data in minibatch]
-        nextState_batch = [data[3] for data in minibatch]  # Step 2: calculate y
-        # 
+        nextState_batch = [data[3] for data in minibatch]  # Step 2: calculate y, [(4,80,80), ..., ] batch_size个
+        # (8, 1)： eg: [[0.], [0.], [0.], [0.], [0.], [0.], [0.], [0.]]
         y_batch = np.zeros([BATCH_SIZE, 1])
-        # print("train next state shape")
+        # shape: (8, 4, 80, 80)
         nextState_batch = np.array(nextState_batch)
-        # print(nextState_batch.shape)
+        #shape: (8, 4, 80, 80)
         nextState_batch = torch.Tensor(nextState_batch)
         action_batch = np.array(action_batch)
+        # 选取的动作的索引？？？这里有问题
         index = action_batch.argmax(axis=1)
         print("action "+str(index))
         index = np.reshape(index, [BATCH_SIZE, 1])
