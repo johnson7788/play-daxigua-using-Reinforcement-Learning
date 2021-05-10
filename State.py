@@ -119,7 +119,7 @@ class AI_Board(GameBoard):
         根据输入的动作，返回状态奖励，存活状态等
         :param action: eg: 0
         :type action: int
-        :return:
+        :return: image: (400, 800, 3), self.score: int, reward: int, alive:bool
         :rtype:
         """
         # 选择一个动作
@@ -135,7 +135,7 @@ class AI_Board(GameBoard):
         if reward == 0:
             #如果没有得分，那么我们让奖励为负值，这样有益于训练
             reward = -self.i
-        # 获取最终的奖励
+        # 获取最终的奖励, image: (400, 800, 3), self.score: int
         return image, self.score, reward, self.alive
 
     def run(self):

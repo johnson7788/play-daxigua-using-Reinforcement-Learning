@@ -4,12 +4,13 @@
 # @File  : xiguaenv.py
 # @Author: johnson
 # @Contact : github: johnson7788
-# @Desc  : 使用gym封装一下
+# @Desc  : 使用gym封装一下, 暂未完成
 
 import numpy as np
 import gym
 from gym import spaces
 from stable_baselines3.common.env_checker import check_env
+from State import AI_Board
 
 class DaxiguaEnv(gym.Env):
     """
@@ -21,10 +22,11 @@ class DaxiguaEnv(gym.Env):
         # 他们必须是gym.spaces对象
         # 当使用离散动作时，这里我们14个动作：代表放置14个位置
         n_actions = 14
+        self.game = AI_Board()
         self.action_space = spaces.Discrete(n_actions)
-        # 这里我们观察到的是agent的坐标, 这可以用离散空间和box空间来描述。Box的值的下限是0，上限是self.grid_size的大小，shape中的值为1，代表每次观察空间返回一个值
-        self.observation_space = spaces.Box(low=0, high=self.grid_size,
-                                            shape=(1,), dtype=np.float32)
+        # 这里我们观察到的游戏的返回的图像
+        self.observation_space = spaces.Box(low=0, high=255,
+                                        shape=(N_CHANNELS, HEIGHT, WIDTH), dtype=np.uint8)
 
     def reset(self):
         """
