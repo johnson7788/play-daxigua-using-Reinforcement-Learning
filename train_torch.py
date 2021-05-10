@@ -155,11 +155,11 @@ class BrainDQNMain(object):
         y_batch_tensor = Variable(torch.Tensor(y_batch))
         y_predict = self.Q_net(state_batch_tensor).gather(1, action_batch_tensor)
         loss = self.loss_func(y_predict, y_batch_tensor)
-        print("loss is "+str(loss))
+        print(f"损失是: {loss.item()}")
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-
+        #定期更新target网络
         if self.timeStep % UPDATE_TIME == 0:
             self.Q_netT.load_state_dict(self.Q_net.state_dict())
             self.save()
@@ -167,7 +167,7 @@ class BrainDQNMain(object):
     # print(nextObservation.shape)
     def setPerception(self, nextObservation, action, reward, terminal):
         """
-
+        主程序
         :param nextObservation: 观察到的游戏状态处理后的array
         :type nextObservation:  ndarray (1, 80, 80)
         :param action: Qnet或随机的动作
