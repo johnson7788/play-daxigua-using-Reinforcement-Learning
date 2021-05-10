@@ -7,6 +7,7 @@ import cv2
 import sys
 from torch import nn
 import os
+from State import AI_Board
 
 GAMMA = 0.99  # decay rate of past observations
 # 每1000个timestep，训练一次DQN网络，
@@ -20,6 +21,7 @@ REPLAY_MEMORY = 2000
 #训练的batch_size
 BATCH_SIZE = 8
 FRAME_PER_ACTION = 1
+#每多少个时间步更新下Target Q网络
 UPDATE_TIME = 100
 # 游戏观察的画面进行resize，特征的大小
 width = 80
@@ -247,7 +249,7 @@ class BrainDQNMain(object):
 
 
 if __name__ == '__main__':
-    from State import AI_Board
+    # 游戏初始化
     game = AI_Board()
     # 可操作的动作数量
     actions = game.action_num

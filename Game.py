@@ -34,6 +34,7 @@ class GameBoard(object):
         self.balls = []
         self.score = 0
         self.last_score = 0
+        # 帧计数
         self.count = 1
         self.lock = False
         self.waiting = False

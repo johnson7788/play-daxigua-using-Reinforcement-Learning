@@ -34,6 +34,7 @@ class AI_Board(GameBoard):
         :rtype:
         """
         try:
+            # 这一帧的奖励初始化
             reward = 0
             if not self.waiting:
                 self.count += 1
