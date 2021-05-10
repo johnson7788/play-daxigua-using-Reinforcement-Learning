@@ -11,7 +11,7 @@ from State import AI_Board
 
 GAMMA = 0.99  # decay rate of past observations
 # 从第20个timestep开始，训练DQN网络，思路有点问题？
-OBSERVE = 20.
+OBSERVE = 60.
 EXPLORE = 20000.  # frames over which to anneal epsilon
 # 如果FINAL_EPSILON 和INITIAL_EPSILON 的值相等，那么随机探索的概率会保持不变
 INITIAL_EPSILON = 0.0001  # starting value of epsilon
@@ -19,14 +19,13 @@ FINAL_EPSILON = 0.0001  # final value of epsilon
 # 以前要记住的transitions的数量, 保留的最大的buffer记忆的数量
 REPLAY_MEMORY = 2000
 # 训练的batch_size
-BATCH_SIZE = 8
+BATCH_SIZE = 16
 FRAME_PER_ACTION = 1
 # 每多少个时间步更新下Target Q网络
 UPDATE_TIME = 100
 # 游戏观察的画面进行resize，特征的大小
 width = 80
 height = 80
-
 
 def preprocess(observation):
     """

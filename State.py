@@ -12,7 +12,7 @@ class AI_Board(GameBoard):
         self.gravity = (0, 4000)
         GameBoard.__init__(self, self.create_time, self.gravity)
         #动作的数量
-        self.action_num = 16
+        self.action_num = 14
         # 初始化画布
         self.init_segment()
         self.setup_collision_handler()
