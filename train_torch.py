@@ -118,12 +118,14 @@ class BrainDQNMain(object):
         :return:
         :rtype:
         """
+        # 从buffer中随机取出batch_size数据
         minibatch = random.sample(self.replayMemory, BATCH_SIZE)
+        # 当前状态，采取动作，获取的奖励，下一个状态
         state_batch = [data[0] for data in minibatch]
         action_batch = [data[1] for data in minibatch]
         reward_batch = [data[2] for data in minibatch]
-        nextState_batch = [data[3]
-                           for data in minibatch]  # Step 2: calculate y
+        nextState_batch = [data[3] for data in minibatch]  # Step 2: calculate y
+        # 
         y_batch = np.zeros([BATCH_SIZE, 1])
         # print("train next state shape")
         nextState_batch = np.array(nextState_batch)
