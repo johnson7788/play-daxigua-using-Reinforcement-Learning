@@ -5,7 +5,15 @@ from Fruit import create_fruit
 
 class GameBoard(object):
     def __init__(self, create_time, gravity):
+        """
+
+        :param create_time: 每隔0.5秒，创建一个新的水果
+        :type create_time:
+        :param gravity: 重力，可以算出水果下落的速度
+        :type gravity:
+        """
         self.RES = self.WIDTH, self.HEIGHT = 400, 800
+        # 刷新频率
         self.FPS = 50
         self.balls = []
         self.fruits = []

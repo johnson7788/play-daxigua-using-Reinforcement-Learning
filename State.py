@@ -6,7 +6,7 @@ from Game import GameBoard
 
 class AI_Board(GameBoard):
     def __init__(self):
-        # 每隔0.5秒，创建一个新的水果
+        # 每隔0.5秒，创建一个新的水果, 如果更改这个时间
         self.create_time = 0.5
         # 重力，可以算出水果下落的速度
         self.gravity = (0, 4000)

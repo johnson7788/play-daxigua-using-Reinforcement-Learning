@@ -10,7 +10,7 @@ import os
 from State import AI_Board
 
 GAMMA = 0.99  # decay rate of past observations
-# 每40个timestep，训练一次DQN网络，
+# 从第20个timestep开始，训练DQN网络，思路有点问题？
 OBSERVE = 20.
 EXPLORE = 20000.  # frames over which to anneal epsilon
 # 如果FINAL_EPSILON 和INITIAL_EPSILON 的值相等，那么随机探索的概率会保持不变
@@ -94,6 +94,7 @@ class BrainDQNMain(object):
         # Q的target网络
         self.Q_netT = DeepNetWork()
         self.load()
+        # DQN网络的损失函数
         self.loss_func = nn.MSELoss()
         LR = 1e-6
         self.optimizer = torch.optim.Adam(self.Q_net.parameters(), lr=LR)
@@ -132,11 +133,7 @@ class BrainDQNMain(object):
         #shape: (8, 4, 80, 80)
         nextState_batch = torch.Tensor(nextState_batch)
         action_batch = np.array(action_batch)
-        # 选取的动作的索引？？？这里有问题
-        index = action_batch.argmax(axis=1)
-        print("action "+str(index))
-        index = np.reshape(index, [BATCH_SIZE, 1])
-        action_batch_tensor = torch.LongTensor(index)
+        action_batch_tensor = torch.LongTensor(action_batch).unsqueeze(1)
         QValue_batch = self.Q_netT(nextState_batch)
         QValue_batch = QValue_batch.detach().numpy()
 
@@ -150,13 +147,13 @@ class BrainDQNMain(object):
                 # 代表当前y值为当前reward+未来预期最大值*gamma(gamma:经验系数)
                 y_batch[i][0] = reward_batch[i] + \
                     GAMMA * np.max(QValue_batch[i])
-
+        # y_batch: shape(batch_size, 1)
         y_batch = np.array(y_batch)
+        # 确认一下形状，变成了 (batch_size, 1)
         y_batch = np.reshape(y_batch, [BATCH_SIZE, 1])
         state_batch_tensor = Variable(torch.Tensor(state_batch))
         y_batch_tensor = Variable(torch.Tensor(y_batch))
-        y_predict = self.Q_net(state_batch_tensor).gather(
-            1, action_batch_tensor)
+        y_predict = self.Q_net(state_batch_tensor).gather(1, action_batch_tensor)
         loss = self.loss_func(y_predict, y_batch_tensor)
         print("loss is "+str(loss))
         self.optimizer.zero_grad()
@@ -194,6 +191,7 @@ class BrainDQNMain(object):
             self.replayMemory.popleft()
         # 是否该训练DQN了
         if self.timeStep > OBSERVE:  # Train the network
+            print(f"开始训练DQN网络")
             self.train()
 
         #打印一些日志信息
